@@ -5,22 +5,22 @@
 set -e
 
 # create a templates file with the strings for debconf to display
-cat > /run/my_script.templates << 'EOF'
-Template: my_script/progress/a
+cat > /run/script.templates << 'EOF'
+Template: script/progress/a
 Type: text
 Description: Step A
 
-Template: my_script/progress/b
+Template: script/progress/b
 Type: text
 Description: Step B
 
-Template: my_script/progress/fallback
+Template: script/progress/fallback
 Type: text
 Description: Running ${STEP}...
 EOF
 
 # use the utility to load the generated template file
-debconf-loadtemplate my_script /run/my_script.templates
+debconf-loadtemplate script /run/script.templates
 
 # pause just to show "Running Preseed..."
 sleep 2
@@ -28,9 +28,9 @@ sleep 2
 # foreach 3 steps tell debconf which template string to display
 for step in a b c; do
 
-    if ! db_progress INFO my_script/progress/$step; then
-        db_subst my_script/progress/fallback STEP "$step"
-        db_progress INFO my_script/progress/fallback
+    if ! db_progress INFO script/progress/$step; then
+        db_subst script/progress/fallback STEP "$step"
+        db_progress INFO script/progress/fallback
     fi
 
     case $step in
