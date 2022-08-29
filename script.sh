@@ -36,14 +36,17 @@ for step in a b c; do
     case $step in
         "a")
             # run commands or scripts in the installer environment (this uses the sleep command in the installer environment)
+            mkdir -p /home/user/Desktop/firstrun
             sleep 10
             ;;
         "b")
             # run commands or scripts in the chroot environment (this uses the sleep command from the installed system)
+            mkdir -p /home/user/Desktop/firstrun
             in-target sleep 10
             ;;
         "c")
             # just another sample step
+            mkdir -p /home/user/Desktop/firstrun
             sleep 10
             ;;
     esac
